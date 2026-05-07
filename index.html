@@ -15,6 +15,11 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div id="eventOverlay" class="event-overlay"></div>
+    <div id="fallingBoxes" class="falling-boxes-container"></div>
+
+    <div id="backgroundItems" class="background-items"></div>
+
     <div id="autoClickersContainer" class="auto-clickers-container"></div>
 
     <div class="game-container">
@@ -27,7 +32,7 @@
                 <p id="boxesPerSecond">Boxes per second: 0</p>
             </div>
             
-            <div class="shop">
+            <div class="shop"></div>
                 <h2>Shop</h2>
                 <div class="upgrade" id="autoClickerUpgrade">
                     <h3>AutoClicker</h3>
@@ -35,6 +40,14 @@
                     <p>Cost: <span id="autoClickerCost">10</span> boxes</p>
                     <p>Owned: <span id="autoClickerOwned">0</span></p>
                     <button id="buyAutoClicker">Buy AutoClicker</button>
+                </div>
+
+                <div class="upgrade" id="boxPrinterUpgrade">
+                    <h3>Box Printer 🖨️</h3>
+                    <p>+20 boxes per second</p>
+                    <p>Cost: <span id="boxPrinterCost">400</span> boxes</p>
+                    <p>Owned: <span id="boxPrinterOwned">0</span></p>
+                    <button id="buyBoxPrinter">Buy Box Printer</button>
                 </div>
                 
                 <div class="upgrade" id="factoryUpgrade">
