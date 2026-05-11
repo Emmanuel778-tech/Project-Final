@@ -17,6 +17,18 @@
 <body>
     <div id="eventOverlay" class="event-overlay"></div>
     <div id="fallingBoxes" class="falling-boxes-container"></div>
+    <div class="conveyor-belt"></div>
+    
+<div class="factory-windows"></div>
+<div class="stacked-boxes-left">📦<br>📦📦<br>📦📦📦</div>
+<div class="stacked-boxes-right">📦<br>📦📦<br>📦📦📦</div>
+<div class="smokestack left"></div>
+<div class="smokestack right"></div>
+<div class="gear top-left">⚙️</div>
+<div class="gear top-right">⚙️</div>
+<div class="chain left"></div>
+<div class="chain right"></div>
+
 
     <div id="backgroundItems" class="background-items"></div>
 
@@ -33,7 +45,6 @@
             </div>
             
             <div class="shop"></div>
-                <h2>Shop</h2>
                 <div class="upgrade" id="autoClickerUpgrade">
                     <h3>AutoClicker</h3>
                     <p>+1 box per second</p>
@@ -49,6 +60,32 @@
                     <p>Owned: <span id="boxPrinterOwned">0</span></p>
                     <button id="buyBoxPrinter">Buy Box Printer</button>
                 </div>
+
+                <div class="upgrade special-upgrade" id="goldenClickerUpgrade">
+                    <h3>Golden Clicker ✨</h3>
+                    <p>+650 boxes every 5 seconds</p>
+                    <p>Cost: <span id="goldenClickerCost">1500</span> boxes</p>
+                    <p>Owned: <span id="goldenClickerOwned">0</span></p>
+                    <button id="buyGoldenClicker">Buy Golden Clicker</button>
+                </div>
+
+                <div class="upgrade special-upgrade" id="diamondClickerUpgrade">
+                    <h3>Diamond Clicker 💎</h3>
+                    <p>+1500 boxes every 10 seconds</p>
+                    <p>Cost: <span id="diamondClickerCost">20000</span> boxes</p>
+                    <p>Owned: <span id="diamondClickerOwned">0</span></p>
+                    <button id="buyDiamondClicker">Buy Diamond Clicker</button>
+                </div>
+
+                <div class="upgrade special-upgrade" id="unrealClickerUpgrade">
+                    <h3>Unreal Clicker 🌟</h3>
+                    <p>+10000 boxes every 60 seconds</p>
+                    <p>Cost: <span id="unrealClickerCost">100000</span> boxes</p>
+                    <p>Owned: <span id="unrealClickerOwned">0</span></p>
+                    <button id="buyUnrealClicker">Buy Unreal Clicker</button>
+                </div>
+
+
                 
                 <div class="upgrade" id="factoryUpgrade">
                     <h3>Box Factory</h3>

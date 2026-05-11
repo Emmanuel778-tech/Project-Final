@@ -3,7 +3,6 @@ console.log("Script Started");
 let eventActive = false;
 let nextEventThreshold = 4500;
 
-
 let boxCount = 0;
 let autoClickerOwned = 0;
 let autoClickerCost = 10;
@@ -12,6 +11,14 @@ let factoryCost = 75;
 let boxPrinterOwned = 0;
 let boxPrinterCost = 400;
 let totalBoxesPerSecond = 0;
+let goldenClickerOwned = 0;
+let goldenClickerCost = 1500;
+let diamondClickerOwned = 0;
+let diamondClickerCost = 20000;
+let unrealClickerOwned = 0;
+let unrealClickerCost = 100000;
+
+
 ;
 
 // Function to update the box display
@@ -100,10 +107,12 @@ function generateBoxesAutomatically() {
 function updateAllDisplays() {
     updateBoxDisplay();
     updateUpgradeDisplays();
+    updateSpecialClickerDisplays();
     calculateBoxesPerSecond();
     updateAutoClickerVisuals();
     updateBackgroundItems();
 }
+
 
 
 // Function to buy AutoClicker
@@ -215,106 +224,137 @@ function updateBackgroundItems() {
 }
 
 // Function to create a falling box
+// Function to create a falling box
 function createFallingBox() {
     let box = document.createElement('div');
     let isBig = Math.random() > 0.5;
     
     box.className = 'falling-box ' + (isBig ? 'big' : 'small');
     box.innerText = '📦';
-    box.style.left = Math.random() * 90 + '%';
+    
+    // Random horizontal position across the entire screen
+    let randomLeft = Math.random() * 95;
+    box.style.left = randomLeft + '%';
+    
+    // Random starting position slightly above screen
+    box.style.top = '-100px';
+    
+    // Random animation duration for variety (2-4 seconds)
+    let duration = 2 + Math.random() * 2;
+    box.style.animation = 'fallAndRotate ' + duration + 's linear';
     
     let boxValue = isBig ? 100 : 50;
     
     box.addEventListener('click', function() {
         boxCount = boxCount + boxValue;
         updateBoxDisplay();
-        box.remove();
+        
+        // Add a pop effect when clicked
+        box.style.transform = 'scale(1.5)';
+        box.style.opacity = '0';
+        
+        setTimeout(function() {
+            box.remove();
+        }, 200);
     });
     
     let container = document.getElementById('fallingBoxes');
     container.appendChild(box);
     
+    // Remove box after animation completes
     setTimeout(function() {
         if (box.parentElement) {
             box.remove();
         }
-    }, 3000);
+    }, duration * 1000);
 }
 
-// Function to check if event should trigger
-function checkForEvent() {
-    if (boxCount >= nextEventThreshold && eventActive === false) {
-        console.log('Event triggered at ' + boxCount + ' boxes!');
-        startBoxRainEvent();
+// Function to update special clicker displays
+function updateSpecialClickerDisplays() {
+    // Golden Clicker
+    let goldenCostElement = document.getElementById('goldenClickerCost');
+    let goldenOwnedElement = document.getElementById('goldenClickerOwned');
+    goldenCostElement.innerText = goldenClickerCost;
+    goldenOwnedElement.innerText = goldenClickerOwned;
+    
+    // Diamond Clicker
+    let diamondCostElement = document.getElementById('diamondClickerCost');
+    let diamondOwnedElement = document.getElementById('diamondClickerOwned');
+    diamondCostElement.innerText = diamondClickerCost;
+    diamondOwnedElement.innerText = diamondClickerOwned;
+    
+    // Unreal Clicker
+    let unrealCostElement = document.getElementById('unrealClickerCost');
+    let unrealOwnedElement = document.getElementById('unrealClickerOwned');
+    unrealCostElement.innerText = unrealClickerCost;
+    unrealOwnedElement.innerText = unrealClickerOwned;
+}
+
+// Function to buy Golden Clicker
+function buyGoldenClicker() {
+    if (boxCount >= goldenClickerCost) {
+        boxCount = boxCount - goldenClickerCost;
+        goldenClickerOwned = goldenClickerOwned + 1;
+        goldenClickerCost = goldenClickerCost + 500;
+        updateAllDisplays();
     }
 }
 
-
-// Function to start the box rain event
-function startBoxRainEvent() {
-    if (eventActive) {
-        return;
-    }
-    
-    eventActive = true;
-    
-    let overlay = document.getElementById('eventOverlay');
-    let fallingContainer = document.getElementById('fallingBoxes');
-    
-    overlay.classList.add('active');
-    fallingContainer.classList.add('active');
-    
-    let message = document.createElement('div');
-    message.className = 'event-message';
-    message.innerText = 'BOX RAIN EVENT! 🎉';
-    document.body.appendChild(message);
-    
-    setTimeout(function() {
-        message.remove();
-    }, 2000);
-    
-    let boxInterval = setInterval(function() {
-        createFallingBox();
-    }, 300);
-    
-    setTimeout(function() {
-        clearInterval(boxInterval);
-        overlay.classList.remove('active');
-        fallingContainer.classList.remove('active');
-        eventActive = false;
-        
-        fallingContainer.innerText = '';
-    }, 15000);
-    
-    nextEventThreshold = nextEventThreshold + 2250;
-}
-
-// Function to check if event should trigger
-function checkForEvent() {
-    if (boxCount >= nextEventThreshold && eventActive === false) {
-        startBoxRainEvent();
+// Function to buy Diamond Clicker
+function buyDiamondClicker() {
+    if (boxCount >= diamondClickerCost) {
+        boxCount = boxCount - diamondClickerCost;
+        diamondClickerOwned = diamondClickerOwned + 1;
+        diamondClickerCost = diamondClickerCost + 2000;
+        updateAllDisplays();
     }
 }
 
-function clickBox() {
-    boxCount = boxCount + 1;
-    updateBoxDisplay();
-    checkForEvent();
+// Function to buy Unreal Clicker
+function buyUnrealClicker() {
+    if (boxCount >= unrealClickerCost) {
+        boxCount = boxCount - unrealClickerCost;
+        unrealClickerOwned = unrealClickerOwned + 1;
+        unrealClickerCost = unrealClickerCost + 5000;
+        updateAllDisplays();
+    }
 }
 
-function generateBoxesAutomatically() {
-    if (totalBoxesPerSecond > 0) {
-        for (let i = 0; i < autoClickerOwned; i++) {
-            boxCount = boxCount + 1;
-            animateRandomClicker();
-        }
-        
-        boxCount = boxCount + (factoryOwned * 5);
-        boxCount = boxCount + (boxPrinterOwned * 20);
-        
+// Golden Clicker generation (every 5 seconds)
+function generateGoldenClicker() {
+    if (goldenClickerOwned > 0) {
+        boxCount = boxCount + (goldenClickerOwned * 650);
         updateBoxDisplay();
-        checkForEvent();
     }
 }
+
+// Diamond Clicker generation (every 10 seconds)
+function generateDiamondClicker() {
+    if (diamondClickerOwned > 0) {
+        boxCount = boxCount + (diamondClickerOwned * 1500);
+        updateBoxDisplay();
+    }
+}
+
+// Unreal Clicker generation (every 60 seconds)
+function generateUnrealClicker() {
+    if (unrealClickerOwned > 0) {
+        boxCount = boxCount + (unrealClickerOwned * 10000);
+        updateBoxDisplay();
+    }
+}
+
+let buyGoldenClickerButton = document.getElementById('buyGoldenClicker');
+let buyDiamondClickerButton = document.getElementById('buyDiamondClicker');
+let buyUnrealClickerButton = document.getElementById('buyUnrealClicker');
+
+buyGoldenClickerButton.addEventListener('click', buyGoldenClicker);
+buyDiamondClickerButton.addEventListener('click', buyDiamondClicker);
+buyUnrealClickerButton.addEventListener('click', buyUnrealClicker);
+
+// Start special clicker timers
+setInterval(generateGoldenClicker, 5000);
+setInterval(generateDiamondClicker, 10000);
+setInterval(generateUnrealClicker, 60000);
 
 
